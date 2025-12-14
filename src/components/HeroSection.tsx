@@ -1,23 +1,66 @@
 import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useParallax } from "@/hooks/useParallax";
+import FloatingShape from "./FloatingShape";
 
 const HeroSection = () => {
+  const parallax = useParallax(0.08);
+
+  const shapes = [
+    { type: "diamond" as const, size: 16, color: "primary", position: { top: "80px", right: "80px" }, delay: 0, speed: 1.5 },
+    { type: "circle" as const, size: 24, color: "secondary", position: { top: "160px", left: "80px" }, delay: 1, speed: 1.2 },
+    { type: "square" as const, size: 32, color: "accent", position: { bottom: "160px", right: "160px" }, delay: 2, speed: 0.8 },
+    { type: "circle" as const, size: 12, color: "neon-green", position: { bottom: "80px", left: "160px" }, delay: 1.5, speed: 2 },
+    { type: "diamond" as const, size: 20, color: "secondary", position: { top: "300px", right: "200px" }, delay: 0.5, speed: 1.3 },
+    { type: "square" as const, size: 14, color: "primary", position: { bottom: "300px", left: "100px" }, delay: 2.5, speed: 1.8 },
+    { type: "circle" as const, size: 18, color: "accent", position: { top: "200px", left: "300px" }, delay: 1.8, speed: 1.1 },
+    { type: "diamond" as const, size: 10, color: "neon-green", position: { bottom: "200px", right: "300px" }, delay: 0.8, speed: 2.2 },
+  ];
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style={{ perspective: "1000px" }}>
       {/* Animated Background */}
       <div className="absolute inset-0 cyber-grid opacity-30" />
       
-      {/* Gradient Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[128px] animate-pulse-neon" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-[128px] animate-pulse-neon" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[200px] animate-pulse-neon" style={{ animationDelay: "0.5s" }} />
+      {/* Gradient Orbs with parallax */}
+      <div 
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[128px] animate-pulse-neon" 
+        style={{ 
+          transform: `translate3d(${parallax.x * 0.3}px, ${parallax.y * 0.3}px, 0)`,
+          transition: "transform 0.2s ease-out"
+        }}
+      />
+      <div 
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-[128px] animate-pulse-neon" 
+        style={{ 
+          animationDelay: "1s",
+          transform: `translate3d(${-parallax.x * 0.4}px, ${parallax.y * 0.4}px, 0)`,
+          transition: "transform 0.2s ease-out"
+        }} 
+      />
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[200px] animate-pulse-neon" 
+        style={{ 
+          animationDelay: "0.5s",
+          transform: `translate(-50%, -50%) translate3d(${parallax.x * 0.2}px, ${parallax.y * 0.2}px, 0)`,
+          transition: "transform 0.2s ease-out"
+        }} 
+      />
 
-      {/* Floating Geometric Shapes */}
-      <div className="absolute top-20 right-20 w-4 h-4 border-2 border-primary rotate-45 animate-float" />
-      <div className="absolute top-40 left-20 w-6 h-6 border-2 border-secondary rounded-full animate-float" style={{ animationDelay: "1s" }} />
-      <div className="absolute bottom-40 right-40 w-8 h-8 border-2 border-accent animate-float" style={{ animationDelay: "2s" }} />
-      <div className="absolute bottom-20 left-40 w-3 h-3 bg-neon-green rounded-full animate-float" style={{ animationDelay: "1.5s" }} />
+      {/* Floating Geometric Shapes with 3D parallax */}
+      {shapes.map((shape, index) => (
+        <FloatingShape
+          key={index}
+          type={shape.type}
+          size={shape.size}
+          color={shape.color}
+          position={shape.position}
+          parallaxOffset={parallax}
+          delay={shape.delay}
+          speedMultiplier={shape.speed}
+        />
+      ))}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
