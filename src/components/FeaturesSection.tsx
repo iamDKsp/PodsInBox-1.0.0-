@@ -4,19 +4,19 @@ const features = [
   {
     icon: Truck,
     title: "Entrega Rápida",
-    description: "Enviamos para todo Brasil em até 24h para capitais.",
+    description: "Você pode agendar uma entrega ou combinar agora, 24h por dia, diversos motocas prontos para entrega!",
     color: "primary",
   },
   {
     icon: Shield,
     title: "Garantia Total",
-    description: "30 dias de garantia em todos os produtos.",
+    description: "Caso seu pod tenha algum defeito, trocamos na mesma hora!",
     color: "secondary",
   },
   {
     icon: CreditCard,
     title: "Pagamento Seguro",
-    description: "Parcelamento em até 12x sem juros.",
+    description: "Parcelamento em até 12x  c/juros.",
     color: "accent",
   },
   {
@@ -29,10 +29,10 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section className="py-20 relative">
+    <section className="py-20 relative" id="sobre">
       {/* Top Border */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      
+
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => {

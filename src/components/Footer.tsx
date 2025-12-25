@@ -1,9 +1,24 @@
 import { Instagram, Facebook, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const Footer = () => {
+  const handleSocialClick = (social: string, href: string) => {
+    if (social === "Instagram") {
+      window.open(href, "_blank");
+    } else {
+      toast.info("Tente nosso Instagram!", {
+        description: "Visite @podsinbox para novidades e promoções.",
+        action: {
+          label: "Ir para Instagram",
+          onClick: () => window.open("https://www.instagram.com/podsinbox/", "_blank"),
+        },
+      });
+    }
+  };
+
   const socialLinks = [
-    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Instagram, href: "https://www.instagram.com/podsinbox/", label: "Instagram" },
     { icon: Facebook, href: "#", label: "Facebook" },
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Youtube, href: "#", label: "YouTube" },
@@ -26,7 +41,7 @@ const Footer = () => {
     <footer className="relative pt-20 pb-8 border-t border-border/30">
       {/* Background */}
       <div className="absolute inset-0 cyber-grid opacity-10" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
@@ -47,14 +62,17 @@ const Footer = () => {
               {socialLinks.map((social) => {
                 const IconComponent = social.icon;
                 return (
-                  <a
+                  <button
                     key={social.label}
-                    href={social.href}
+                    onClick={() => handleSocialClick(social.label, social.href)}
                     aria-label={social.label}
-                    className="w-10 h-10 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300"
+                    className={`w-10 h-10 rounded-lg glass flex items-center justify-center transition-all duration-300 ${social.label === "Instagram"
+                        ? "text-pink-500 hover:text-pink-400 hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"
+                        : "text-muted-foreground hover:text-primary hover:border-primary/50"
+                      }`}
                   >
                     <IconComponent className="w-5 h-5" />
-                  </a>
+                  </button>
                 );
               })}
             </div>
@@ -107,19 +125,19 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <span className="font-body text-muted-foreground">
-                  São Paulo, SP - Brasil
+                  Bauru, SP - Brasil
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
                 <span className="font-body text-muted-foreground">
-                  (11) 99999-9999
+                  (14) 99836-4338
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
                 <span className="font-body text-muted-foreground">
-                  contato@podsinbox.com
+                  dkgroup@gmail.com
                 </span>
               </li>
             </ul>

@@ -1,73 +1,125 @@
-# Welcome to your Lovable project
+# Pods in Box - E-commerce de Pods
 
-## Project info
+Loja online de pods/vapes com painel administrativo completo.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Tecnologias
 
-## How can I edit this code?
+**Frontend:**
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
 
-There are several ways of editing your application.
+**Backend:**
+- Node.js + Express
+- MongoDB Atlas
+- Cloudinary (imagens)
+- JWT Auth
 
-**Use Lovable**
+## 📦 Instalação Local
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone o repositório
 git clone <YOUR_GIT_URL>
+cd pods-in-box
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Instale as dependências
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Configure as variáveis de ambiente
+cp .env.example .env
+# Edite o arquivo .env com suas credenciais
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Execute o projeto
+npm run start
 ```
 
-**Edit a file directly in GitHub**
+## ☁️ Deploy em Produção
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Pré-requisitos
 
-**Use GitHub Codespaces**
+Crie contas gratuitas em:
+- [MongoDB Atlas](https://www.mongodb.com/atlas) - Banco de dados
+- [Cloudinary](https://cloudinary.com/) - Armazenamento de imagens
+- [Railway](https://railway.app/) - Backend
+- [Vercel](https://vercel.com/) - Frontend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 1. Configurar MongoDB Atlas
 
-## What technologies are used for this project?
+1. Crie um cluster gratuito (M0)
+2. Crie um usuário de database
+3. Adicione `0.0.0.0/0` na whitelist de IPs
+4. Copie a connection string (formato: `mongodb+srv://...`)
 
-This project is built with:
+### 2. Configurar Cloudinary
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Crie uma conta
+2. No dashboard, copie:
+   - Cloud Name
+   - API Key
+   - API Secret
 
-## How can I deploy this project?
+### 3. Deploy do Backend (Railway)
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+1. Conecte seu repositório GitHub ao Railway
+2. Configure as variáveis de ambiente:
+   ```
+   MONGODB_URI=mongodb+srv://...
+   JWT_SECRET=uma-chave-secreta-forte
+   CLOUDINARY_CLOUD_NAME=seu-cloud-name
+   CLOUDINARY_API_KEY=sua-api-key
+   CLOUDINARY_API_SECRET=seu-api-secret
+   FRONTEND_URL=https://seu-app.vercel.app
+   PORT=3001
+   ```
+3. Configure o start command: `node server/index.js`
+4. Deploy!
+5. Anote a URL do backend (ex: `https://seu-app.railway.app`)
 
-## Can I connect a custom domain to my Lovable project?
+### 4. Migrar Dados Existentes
 
-Yes, you can!
+Antes do deploy, migre os dados do `db.json`:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+# Configure MONGODB_URI no .env local
+node server/scripts/migrate-data.js
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### 5. Deploy do Frontend (Vercel)
+
+1. Conecte seu repositório GitHub à Vercel
+2. Configure a variável de ambiente:
+   ```
+   VITE_API_URL=https://seu-backend.railway.app/api
+   ```
+3. Deploy!
+
+### 6. Atualizar Imagens dos Produtos
+
+Após o deploy, acesse o painel admin e faça re-upload das imagens dos produtos (as antigas apontavam para localhost).
+
+## 🔑 Credenciais Padrão
+
+**Admin:**
+- Email: `admin@podsinbox.com`
+- Senha: `admin123`
+
+## 📁 Estrutura do Projeto
+
+```
+├── src/               # Frontend React
+│   ├── components/    # Componentes reutilizáveis
+│   ├── pages/         # Páginas da aplicação
+│   └── lib/           # Utilitários e API client
+├── server/            # Backend Express
+│   ├── config/        # Configurações (MongoDB, Cloudinary)
+│   ├── routes/        # Rotas da API
+│   ├── middleware/    # Middlewares (auth)
+│   ├── utils/         # Utilitários
+│   └── scripts/       # Scripts (migração)
+└── public/            # Assets estáticos
+```
+
+## 📝 Variáveis de Ambiente
+
+Veja `.env.example` para a lista completa de variáveis necessárias.

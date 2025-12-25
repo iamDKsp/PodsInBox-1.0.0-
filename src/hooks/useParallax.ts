@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface ParallaxPosition {
   x: number;
@@ -15,10 +15,17 @@ export const useParallax = (sensitivity: number = 0.05) => {
     rotateY: 0,
   });
 
+  const lastUpdate = useRef(0);
+  const THROTTLE_MS = 50; // Limit updates to 20fps for parallax
+
   const handleScroll = useCallback(() => {
+    const now = Date.now();
+    if (now - lastUpdate.current < THROTTLE_MS) return;
+    lastUpdate.current = now;
+
     const scrollY = window.scrollY;
     const scrollX = window.scrollX;
-    
+
     setPosition({
       x: scrollX * sensitivity,
       y: scrollY * sensitivity,
@@ -28,12 +35,16 @@ export const useParallax = (sensitivity: number = 0.05) => {
   }, [sensitivity]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
+    const now = Date.now();
+    if (now - lastUpdate.current < THROTTLE_MS) return;
+    lastUpdate.current = now;
+
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-    
+
     const mouseX = (e.clientX - centerX) / centerX;
     const mouseY = (e.clientY - centerY) / centerY;
-    
+
     setPosition(prev => ({
       ...prev,
       rotateX: mouseY * 15,
@@ -42,9 +53,9 @@ export const useParallax = (sensitivity: number = 0.05) => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("mousemove", handleMouseMove);
-    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);

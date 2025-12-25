@@ -1,0 +1,628 @@
+{
+  "users": [
+    {
+      "id": "admin-1",
+      "name": "Administrador",
+      "email": "admin@podsinbox.com",
+      "password": "admin123",
+      "role": "admin",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "user-1766630888749-45lzbkifb",
+      "name": "tar",
+      "email": "terer@tec",
+      "password": "$2b$10$naPHifukz2.4.gt5AVFf4OtC9sBfZrEu43Kzxp55LuDa3zRYAMwdq",
+      "role": "customer",
+      "createdAt": "2025-12-25T02:48:08.749Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "GOLD STYLE 20K",
+      "flavor": "Múltiplos sabores",
+      "description": "Pod premium com 20.000 puffs. Bateria de longa duração e sabores intensos.",
+      "price": 99.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766373881822-321964762.png",
+      "category": "Premium",
+      "stock": 47,
+      "isNew": false,
+      "isBestSeller": false,
+      "isFeatured": true,
+      "flavors": [
+        "Pêssego Manga Melancia",
+        "Ice Mint",
+        "Maçã Verde",
+        "Melancia Ice"
+      ],
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "prod-2",
+      "name": "LIFE POD SKL 14ML",
+      "flavor": "Múltiplos sabores",
+      "description": "Life Pod com reservatório de 14ml para maior durabilidade.",
+      "price": 126.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374175972-715939849.png",
+      "category": "Life Pod",
+      "stock": 1,
+      "isNew": false,
+      "isBestSeller": true,
+      "flavors": [
+        "Monster Drink",
+        "Limão",
+        "Maçã Verde",
+        "Melancia Ice",
+        "Triple Berry",
+        "Cereja Limão"
+      ],
+      "createdAt": "2024-01-02T00:00:00.000Z",
+      "isFeatured": false
+    },
+    {
+      "id": "prod-3",
+      "name": "IGNITE V300",
+      "flavor": "Múltiplos sabores",
+      "description": "Ignite V300 com tecnologia avançada de vaporização.",
+      "price": 154.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374312088-542451881.png",
+      "category": "Ignite",
+      "stock": 25,
+      "isNew": false,
+      "isBestSeller": false,
+      "flavors": [
+        "Melancia Pitaya",
+        "Maçã Verde",
+        "Morango Kiwi"
+      ],
+      "createdAt": "2024-01-03T00:00:00.000Z",
+      "isFeatured": false
+    },
+    {
+      "id": "prod-4",
+      "name": "WAKA 36K NEW",
+      "flavor": "Múltiplos sabores",
+      "description": "Novo Waka com impressionantes 36.000 puffs.",
+      "price": 132.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374353510-590194066.png",
+      "category": "Waka",
+      "stock": 39,
+      "isNew": false,
+      "isBestSeller": true,
+      "flavors": [
+        "Uva",
+        "Pêssego Manga Melancia"
+      ],
+      "createdAt": "2024-01-04T00:00:00.000Z",
+      "isFeatured": false
+    },
+    {
+      "id": "prod-5",
+      "name": "WAKA 25K",
+      "flavor": "Múltiplos sabores",
+      "description": "Waka clássico com 25.000 puffs de qualidade.",
+      "price": 121.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374032241-30012115.png",
+      "category": "Waka",
+      "stock": 58,
+      "isNew": false,
+      "isBestSeller": false,
+      "isFeatured": true,
+      "flavors": [
+        "Melão",
+        "Ice Refrescante"
+      ],
+      "createdAt": "2024-01-05T00:00:00.000Z"
+    },
+    {
+      "id": "prod-6",
+      "name": "IGNITE V400 MIX",
+      "flavor": "Múltiplos sabores",
+      "description": "Ignite V400 Mix com sabores combinados exclusivos.",
+      "price": 166.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766373959600-542261121.png",
+      "category": "Ignite",
+      "stock": 28,
+      "isNew": false,
+      "isBestSeller": false,
+      "isFeatured": true,
+      "flavors": [
+        "Morango Ice",
+        "Banana Ice"
+      ],
+      "createdAt": "2024-01-06T00:00:00.000Z"
+    },
+    {
+      "id": "prod-7",
+      "name": "LIFE POD 10K REFIL",
+      "flavor": "Apenas encomenda",
+      "description": "Refil para Life Pod 10K. Disponível apenas por encomenda.",
+      "price": 99.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374598873-350125117.png",
+      "category": "Refil",
+      "stock": 1,
+      "isNew": false,
+      "isBestSeller": false,
+      "flavors": [
+        "Sob encomenda"
+      ],
+      "createdAt": "2024-01-07T00:00:00.000Z",
+      "isFeatured": false
+    },
+    {
+      "id": "prod-8",
+      "name": "ICE KING 40K SUMMER EDITION",
+      "flavor": "Raspadinha de Coca",
+      "description": "Edição especial de verão do Ice King com 40.000 puffs.",
+      "price": 155.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374167874-51704466.png",
+      "category": "Ice King",
+      "stock": 19,
+      "isNew": true,
+      "isBestSeller": true,
+      "isFeatured": true,
+      "flavors": [
+        "Raspadinha de Coca"
+      ],
+      "createdAt": "2024-01-08T00:00:00.000Z"
+    },
+    {
+      "id": "prod-9",
+      "name": "SED ADICCT 28K",
+      "flavor": "Múltiplos sabores",
+      "description": "Sed Adicct com 28.000 puffs e variedade de sabores frutados.",
+      "price": 138.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374616399-163489487.png",
+      "category": "Sed Adicct",
+      "stock": 45,
+      "isNew": false,
+      "isBestSeller": false,
+      "flavors": [
+        "Morango Uva",
+        "Morango Melancia",
+        "Abacaxi Ice",
+        "Morango com Banana",
+        "Uva Ice"
+      ],
+      "createdAt": "2024-01-09T00:00:00.000Z",
+      "isFeatured": false
+    },
+    {
+      "id": "prod-10",
+      "name": "REFIL P100",
+      "flavor": "Reposição",
+      "description": "Refil de reposição P100 para seu dispositivo.",
+      "price": 104.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374706423-968649212.png",
+      "category": "Refil",
+      "stock": 99,
+      "isNew": false,
+      "isBestSeller": false,
+      "flavors": [
+        "Reposição"
+      ],
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "isFeatured": false
+    },
+    {
+      "id": "prod-11",
+      "name": "BLACK SHEEP DUAL 40K",
+      "flavor": "Múltiplos sabores",
+      "description": "Black Sheep Dual com sistema duplo de sabores e 40.000 puffs.",
+      "price": 166.99,
+      "originalPrice": null,
+      "image": "http://localhost:3001/uploads/product-1766374574773-279838664.png",
+      "category": "Black Sheep",
+      "stock": 35,
+      "isNew": false,
+      "isBestSeller": true,
+      "flavors": [
+        "Morango Kiwi / Cola Limão",
+        "Uva / Maracujá",
+        "Uva / Uva Manga"
+      ],
+      "createdAt": "2024-01-11T00:00:00.000Z",
+      "isFeatured": false
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-1765753320345-x8rczjhue",
+      "customerName": "Administrador",
+      "customerEmail": "admin@podsinbox.com",
+      "address": "",
+      "items": [
+        {
+          "productId": "prod-7",
+          "name": "LIFE POD 10K REFIL",
+          "flavor": "Apenas encomenda",
+          "price": 99.99,
+          "quantity": 1
+        }
+      ],
+      "total": 99.99,
+      "status": "delivered",
+      "createdAt": "2025-12-14T23:02:00.345Z",
+      "updatedAt": "2025-12-25T01:47:43.980Z"
+    },
+    {
+      "id": "order-1766626870077-g08l0d37i",
+      "customerName": "Test User",
+      "customerEmail": "11999999999",
+      "address": "Rua Teste 123\n📅 Entrega: 51225-02-20 às 14:00\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-1",
+          "name": "GOLD STYLE 20K",
+          "flavor": "Múltiplos sabores",
+          "price": 99.99,
+          "quantity": 1
+        }
+      ],
+      "total": 99.99,
+      "status": "processing",
+      "createdAt": "2025-12-25T01:41:10.077Z",
+      "updatedAt": "2025-12-25T02:49:30.897Z"
+    },
+    {
+      "id": "order-1766627158889-5ai71s112",
+      "customerName": "teste",
+      "customerEmail": "tetste",
+      "address": "teste\n📅 Entrega: 1233-03-12 às 23:21\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-6",
+          "name": "IGNITE V400 MIX",
+          "flavor": "Múltiplos sabores",
+          "price": 166.99,
+          "quantity": 1
+        }
+      ],
+      "total": 166.99,
+      "status": "delivered",
+      "createdAt": "2025-12-25T01:45:58.889Z",
+      "updatedAt": "2025-12-25T01:47:36.457Z"
+    },
+    {
+      "id": "order-1766628184659-2l3kc8xyl",
+      "customerName": "Administrador",
+      "customerEmail": "321312",
+      "address": "312321\n📅 Entrega: 275760-02-12 às 12:12\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-2",
+          "name": "LIFE POD SKL 14ML",
+          "flavor": "Múltiplos sabores",
+          "price": 126.99,
+          "quantity": 1
+        }
+      ],
+      "total": 126.99,
+      "status": "delivered",
+      "createdAt": "2025-12-25T02:03:04.659Z",
+      "updatedAt": "2025-12-25T02:03:48.236Z"
+    },
+    {
+      "id": "order-1766630848297-jguq3qgzn",
+      "customerName": "Fernando",
+      "customerEmail": "42213231231",
+      "address": "231321321\n📅 Entrega: 121323-02-22 às 00:47\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-5",
+          "name": "WAKA 25K",
+          "flavor": "Múltiplos sabores",
+          "price": 121.99,
+          "quantity": 1
+        }
+      ],
+      "total": 121.99,
+      "status": "shipped",
+      "createdAt": "2025-12-25T02:47:28.297Z",
+      "updatedAt": "2025-12-25T02:49:23.945Z"
+    },
+    {
+      "id": "order-1766630905891-8t3lmx284",
+      "customerName": "tar",
+      "customerEmail": "dasdad",
+      "address": "asdadsa\n📅 Entrega: 12321-03-21 às 21:03\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-5",
+          "name": "WAKA 25K",
+          "flavor": "Múltiplos sabores",
+          "price": 121.99,
+          "quantity": 1
+        }
+      ],
+      "total": 121.99,
+      "status": "shipped",
+      "createdAt": "2025-12-25T02:48:25.891Z",
+      "updatedAt": "2025-12-25T02:55:35.658Z"
+    },
+    {
+      "id": "order-1766631025344-6kk9vpkd1",
+      "customerName": "Administrador",
+      "customerEmail": "asdadsad",
+      "address": "adsadasdasd\n📅 Entrega: 0001-03-12 às 21:23\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-4",
+          "name": "WAKA 36K NEW",
+          "flavor": "Múltiplos sabores",
+          "price": 132.99,
+          "quantity": 1
+        }
+      ],
+      "total": 132.99,
+      "status": "delivered",
+      "createdAt": "2025-12-25T02:50:25.344Z",
+      "updatedAt": "2025-12-25T02:50:55.245Z"
+    },
+    {
+      "id": "order-1766631039984-7jbym5ka2",
+      "customerName": "Administrador",
+      "customerEmail": "1231321312",
+      "address": "123123123\n📅 Entrega: 12313-03-12 às 12:23\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-2",
+          "name": "LIFE POD SKL 14ML",
+          "flavor": "Múltiplos sabores",
+          "price": 126.99,
+          "quantity": 1
+        }
+      ],
+      "total": 126.99,
+      "status": "delivered",
+      "createdAt": "2025-12-25T02:50:39.984Z",
+      "updatedAt": "2025-12-25T02:50:56.884Z"
+    },
+    {
+      "id": "order-1766631153084-e5d56cpeq",
+      "customerName": "Administrador",
+      "customerEmail": "dasdadsad",
+      "address": "asdadsad\n📅 Entrega: 12313-03-21 às 12:31\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-1",
+          "name": "GOLD STYLE 20K",
+          "flavor": "Múltiplos sabores",
+          "price": 99.99,
+          "quantity": 1
+        }
+      ],
+      "total": 99.99,
+      "status": "delivered",
+      "createdAt": "2025-12-25T02:52:33.084Z",
+      "updatedAt": "2025-12-25T02:54:47.066Z"
+    },
+    {
+      "id": "order-1766631168534-pm8eebpw9",
+      "customerName": "Administrador",
+      "customerEmail": "12313213",
+      "address": "12312313\n📅 Entrega: 12313-03-12 às 12:23\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-1",
+          "name": "GOLD STYLE 20K",
+          "flavor": "Múltiplos sabores",
+          "price": 99.99,
+          "quantity": 1
+        }
+      ],
+      "total": 99.99,
+      "status": "delivered",
+      "createdAt": "2025-12-25T02:52:48.534Z",
+      "updatedAt": "2025-12-25T02:54:53.343Z"
+    },
+    {
+      "id": "order-1766631182915-99nfedq5c",
+      "customerName": "Administrador",
+      "customerEmail": "12312313",
+      "address": "1231231321\n📅 Entrega: 123131-03-12 às 12:12\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-6",
+          "name": "IGNITE V400 MIX",
+          "flavor": "Múltiplos sabores",
+          "price": 166.99,
+          "quantity": 1
+        }
+      ],
+      "total": 166.99,
+      "status": "pending",
+      "createdAt": "2025-12-25T02:53:02.915Z"
+    },
+    {
+      "id": "order-1766631251072-5ebl6loki",
+      "customerName": "Administrador",
+      "customerEmail": "dasdadsa",
+      "address": "dasdasdas\n📅 Entrega: 123123-12-23 às 12:12\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-5",
+          "name": "WAKA 25K",
+          "flavor": "Múltiplos sabores",
+          "price": 121.99,
+          "quantity": 1
+        }
+      ],
+      "total": 121.99,
+      "status": "cancelled",
+      "createdAt": "2025-12-25T02:54:11.072Z",
+      "updatedAt": "2025-12-25T02:55:15.826Z"
+    },
+    {
+      "id": "order-1766635723266-zskw4jxa4",
+      "customerName": "Fernando",
+      "customerEmail": "14998364338",
+      "address": "Rua Rosa Fernandes Ribeiro\n📅 Entrega: 2023-03-12 às 01:08\n💳 Pagamento: PIX",
+      "items": [
+        {
+          "productId": "prod-10",
+          "name": "REFIL P100",
+          "flavor": "Reposição",
+          "price": 104.99,
+          "quantity": 1
+        }
+      ],
+      "total": 104.99,
+      "status": "pending",
+      "createdAt": "2025-12-25T04:08:43.266Z"
+    }
+  ],
+  "categories": [
+    "Premium",
+    "Life Pod",
+    "Ignite",
+    "Waka",
+    "Ice King",
+    "Sed Adicct",
+    "Black Sheep",
+    "Refil"
+  ],
+  "customers": [
+    {
+      "id": "customer-001",
+      "name": "Administrador",
+      "phone": "admin@podsinbox.com",
+      "address": "",
+      "orderCount": 1,
+      "totalSpent": 99.99,
+      "createdAt": "2025-12-14T23:02:00.345Z",
+      "updatedAt": "2025-12-14T23:02:00.345Z"
+    },
+    {
+      "id": "customer-002",
+      "name": "Test User",
+      "phone": "11999999999",
+      "address": "Rua Teste 123",
+      "orderCount": 2,
+      "totalSpent": 99.99,
+      "createdAt": "2025-12-25T01:41:10.077Z",
+      "updatedAt": "2025-12-25T02:49:30.897Z"
+    },
+    {
+      "id": "customer-003",
+      "name": "teste",
+      "phone": "tetste",
+      "address": "teste",
+      "orderCount": 1,
+      "totalSpent": 166.99,
+      "createdAt": "2025-12-25T01:45:58.889Z",
+      "updatedAt": "2025-12-25T01:45:58.889Z"
+    },
+    {
+      "id": "customer-004",
+      "name": "Administrador",
+      "phone": "321312",
+      "address": "312321",
+      "orderCount": 1,
+      "totalSpent": 126.99,
+      "createdAt": "2025-12-25T02:03:04.659Z",
+      "updatedAt": "2025-12-25T02:03:04.659Z"
+    },
+    {
+      "id": "customer-1766630848297-qzdu7j2nq",
+      "name": "Fernando",
+      "phone": "42213231231",
+      "address": "231321321\n📅 Entrega: 121323-02-22 às 00:47\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 121.99,
+      "createdAt": "2025-12-25T02:47:28.297Z",
+      "updatedAt": "2025-12-25T02:47:28.297Z"
+    },
+    {
+      "id": "customer-1766630905891-dw76lv43k",
+      "name": "tar",
+      "phone": "dasdad",
+      "address": "asdadsa\n📅 Entrega: 12321-03-21 às 21:03\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 121.99,
+      "createdAt": "2025-12-25T02:48:25.891Z",
+      "updatedAt": "2025-12-25T02:48:25.891Z"
+    },
+    {
+      "id": "customer-1766631025344-3qhu9hzxk",
+      "name": "Administrador",
+      "phone": "asdadsad",
+      "address": "adsadasdasd\n📅 Entrega: 0001-03-12 às 21:23\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 132.99,
+      "createdAt": "2025-12-25T02:50:25.344Z",
+      "updatedAt": "2025-12-25T02:50:25.344Z"
+    },
+    {
+      "id": "customer-1766631039984-ar8xxgvvf",
+      "name": "Administrador",
+      "phone": "1231321312",
+      "address": "123123123\n📅 Entrega: 12313-03-12 às 12:23\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 126.99,
+      "createdAt": "2025-12-25T02:50:39.984Z",
+      "updatedAt": "2025-12-25T02:50:39.984Z"
+    },
+    {
+      "id": "customer-1766631153084-ebgmq4j97",
+      "name": "Administrador",
+      "phone": "dasdadsad",
+      "address": "asdadsad\n📅 Entrega: 12313-03-21 às 12:31\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 99.99,
+      "createdAt": "2025-12-25T02:52:33.084Z",
+      "updatedAt": "2025-12-25T02:52:33.084Z"
+    },
+    {
+      "id": "customer-1766631168534-i6vtiyxm7",
+      "name": "Administrador",
+      "phone": "12313213",
+      "address": "12312313\n📅 Entrega: 12313-03-12 às 12:23\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 99.99,
+      "createdAt": "2025-12-25T02:52:48.534Z",
+      "updatedAt": "2025-12-25T02:52:48.534Z"
+    },
+    {
+      "id": "customer-1766631182915-ubge89f4l",
+      "name": "Administrador",
+      "phone": "12312313",
+      "address": "1231231321\n📅 Entrega: 123131-03-12 às 12:12\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 166.99,
+      "createdAt": "2025-12-25T02:53:02.915Z",
+      "updatedAt": "2025-12-25T02:53:02.915Z"
+    },
+    {
+      "id": "customer-1766631251072-1z09zs6yd",
+      "name": "Administrador",
+      "phone": "dasdadsa",
+      "address": "dasdasdas\n📅 Entrega: 123123-12-23 às 12:12\n💳 Pagamento: PIX",
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": "2025-12-25T02:54:11.072Z",
+      "updatedAt": "2025-12-25T02:55:15.826Z"
+    },
+    {
+      "id": "customer-1766635723267-172h1h47b",
+      "name": "Fernando",
+      "phone": "14998364338",
+      "address": "Rua Rosa Fernandes Ribeiro\n📅 Entrega: 2023-03-12 às 01:08\n💳 Pagamento: PIX",
+      "orderCount": 1,
+      "totalSpent": 104.99,
+      "createdAt": "2025-12-25T04:08:43.267Z",
+      "updatedAt": "2025-12-25T04:08:43.267Z"
+    }
+  ]
+}

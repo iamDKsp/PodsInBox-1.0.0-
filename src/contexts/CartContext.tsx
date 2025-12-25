@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { ordersApi } from "@/lib/api";
+import { toast } from "sonner";
 
 export interface CartItem {
   id: string;
@@ -12,6 +14,7 @@ export interface CartItem {
 interface CartContextType {
   items: CartItem[];
   isOpen: boolean;
+  isCheckingOut: boolean;
   addItem: (item: Omit<CartItem, "quantity">) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
@@ -19,6 +22,7 @@ interface CartContextType {
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
+  checkout: (customerName: string, customerEmail: string, address?: string) => Promise<string | null>;
   totalItems: number;
   subtotal: number;
 }
@@ -28,6 +32,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const addItem = (newItem: Omit<CartItem, "quantity">) => {
     setItems((prev) => {
@@ -42,6 +47,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       return [...prev, { ...newItem, quantity: 1 }];
     });
     setIsOpen(true);
+    toast.success("Produto adicionado ao carrinho!");
   };
 
   const removeItem = (id: string) => {
@@ -66,6 +72,41 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const closeCart = () => setIsOpen(false);
   const toggleCart = () => setIsOpen((prev) => !prev);
 
+  const checkout = async (customerName: string, customerEmail: string, address?: string): Promise<string | null> => {
+    if (items.length === 0) {
+      toast.error("Carrinho vazio");
+      return null;
+    }
+
+    setIsCheckingOut(true);
+    try {
+      const orderData = {
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          quantity: item.quantity,
+        })),
+        customerName,
+        customerEmail,
+        address,
+      };
+
+      const { whatsappLink } = await ordersApi.create(orderData);
+
+      clearCart();
+      closeCart();
+      toast.success("Pedido criado! Redirecionando para WhatsApp...");
+
+      return whatsappLink;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erro ao criar pedido";
+      toast.error(message);
+      return null;
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
+
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -77,6 +118,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       value={{
         items,
         isOpen,
+        isCheckingOut,
         addItem,
         removeItem,
         updateQuantity,
@@ -84,6 +126,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         openCart,
         closeCart,
         toggleCart,
+        checkout,
         totalItems,
         subtotal,
       }}

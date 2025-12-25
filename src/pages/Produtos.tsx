@@ -1,115 +1,83 @@
-import { useState } from "react";
-import { Search, SlidersHorizontal, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Search, SlidersHorizontal, X, Loader2 } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { productsApi } from "@/lib/api";
 
-const allProducts = [
-  {
-    id: 1,
-    name: "Neon Blast",
-    flavor: "Menta Gelada + Melancia",
-    price: 89.90,
-    originalPrice: 119.90,
-    image: "https://images.unsplash.com/photo-1560913210-46c2f2944c6f?w=400&h=400&fit=crop",
-    isNew: true,
-    isBestSeller: false,
-    category: "Frutado",
-  },
-  {
-    id: 2,
-    name: "Cyber Grape",
-    flavor: "Uva Roxa Premium",
-    price: 79.90,
-    image: "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400&h=400&fit=crop",
-    isNew: false,
-    isBestSeller: true,
-    category: "Frutado",
-  },
-  {
-    id: 3,
-    name: "Electric Blue",
-    flavor: "Blueberry Ice",
-    price: 94.90,
-    image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400&h=400&fit=crop",
-    isNew: true,
-    isBestSeller: false,
-    category: "Gelado",
-  },
-  {
-    id: 4,
-    name: "Tropical Storm",
-    flavor: "Manga + Maracujá",
-    price: 84.90,
-    originalPrice: 99.90,
-    image: "https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&h=400&fit=crop",
-    isNew: false,
-    isBestSeller: true,
-    category: "Tropical",
-  },
-  {
-    id: 5,
-    name: "Arctic Mint",
-    flavor: "Menta Polar",
-    price: 74.90,
-    image: "https://images.unsplash.com/photo-1495476479092-6ece1898a101?w=400&h=400&fit=crop",
-    isNew: false,
-    isBestSeller: false,
-    category: "Gelado",
-  },
-  {
-    id: 6,
-    name: "Cherry Nova",
-    flavor: "Cereja Espacial",
-    price: 89.90,
-    image: "https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=400&h=400&fit=crop",
-    isNew: true,
-    isBestSeller: false,
-    category: "Frutado",
-  },
-  {
-    id: 7,
-    name: "Citrus Surge",
-    flavor: "Limão + Laranja",
-    price: 69.90,
-    originalPrice: 84.90,
-    image: "https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=400&h=400&fit=crop",
-    isNew: false,
-    isBestSeller: false,
-    category: "Cítrico",
-  },
-  {
-    id: 8,
-    name: "Velvet Tobacco",
-    flavor: "Tabaco Suave",
-    price: 99.90,
-    image: "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&h=400&fit=crop",
-    isNew: false,
-    isBestSeller: true,
-    category: "Clássico",
-  },
-];
-
-const categories = ["Todos", "Frutado", "Gelado", "Tropical", "Cítrico", "Clássico"];
+interface Product {
+  id: string;
+  name: string;
+  flavor: string;
+  price: number;
+  originalPrice?: number | null;
+  image: string;
+  isNew: boolean;
+  isBestSeller: boolean;
+  isFeatured?: boolean;
+  category: string;
+  stock: number;
+  flavors?: string[];
+}
 
 const Produtos = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [showFilters, setShowFilters] = useState(false);
+  const [highlightedProduct, setHighlightedProduct] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const productRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const filteredProducts = allProducts.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.flavor.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  useEffect(() => {
+    fetchProducts();
+  }, [searchTerm, selectedCategory]);
+
+  // Handle URL product parameter
+  useEffect(() => {
+    const produtoId = searchParams.get("produto");
+    if (produtoId && !isLoading && products.length > 0) {
+      setHighlightedProduct(produtoId);
+      // Scroll to product after a short delay
+      setTimeout(() => {
+        const productElement = productRefs.current[produtoId];
+        if (productElement) {
+          productElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 300);
+      // Remove highlight after animation
+      setTimeout(() => {
+        setHighlightedProduct(null);
+      }, 3000);
+    }
+  }, [searchParams, isLoading, products]);
+
+  const fetchProducts = async () => {
+    try {
+      setIsLoading(true);
+      const params: { search?: string; category?: string } = {};
+      if (searchTerm) params.search = searchTerm;
+      if (selectedCategory !== "Todos") params.category = selectedCategory;
+
+      const data = await productsApi.getAll(params);
+      setProducts(data.products);
+      setCategories(["Todos", ...data.categories]);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <main className="pt-28 pb-16">
         <div className="container mx-auto px-4">
           {/* Page Header */}
@@ -190,17 +158,22 @@ const Produtos = () => {
           {/* Results Count */}
           <div className="mb-6">
             <p className="font-body text-muted-foreground">
-              {filteredProducts.length} {filteredProducts.length === 1 ? "produto encontrado" : "produtos encontrados"}
+              {products.length} {products.length === 1 ? "produto encontrado" : "produtos encontrados"}
             </p>
           </div>
 
           {/* Products Grid */}
-          {filteredProducts.length > 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-10 h-10 animate-spin text-primary" />
+            </div>
+          ) : products.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product, index) => (
+              {products.map((product, index) => (
                 <div
                   key={product.id}
-                  className="animate-scale-in"
+                  ref={(el) => (productRefs.current[product.id] = el)}
+                  className={`animate-scale-in ${highlightedProduct === product.id ? 'ring-4 ring-primary ring-offset-4 ring-offset-background rounded-xl animate-pulse' : ''}`}
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <ProductCard {...product} />

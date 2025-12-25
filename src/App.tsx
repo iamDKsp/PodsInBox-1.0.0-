@@ -6,11 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import CartSidebar from "@/components/CartSidebar";
+import AdminRoute from "@/components/AdminRoute";
 import Index from "./pages/Index";
 import Produtos from "./pages/Produtos";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,11 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<Register />} />
               <Route path="/perfil" element={<Profile />} />
+              <Route path="/admin" element={
+                <AdminRoute>
+                  <Admin />
+                </AdminRoute>
+              } />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -41,3 +48,4 @@ const App = () => (
 );
 
 export default App;
+
