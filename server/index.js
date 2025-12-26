@@ -22,7 +22,8 @@ const allowedOrigins = [
     'http://localhost:8082',
     'http://localhost:5173',
     'http://localhost:3000',
-    process.env.FRONTEND_URL
+    process.env.FRONTEND_URL,
+    'https://pods-in-box.vercel.app'
 ].filter(Boolean);
 
 // Middleware
@@ -31,11 +32,12 @@ app.use(cors({
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.indexOf(origin) !== -1) {
+        // Check if origin is allowed OR if it's any vercel deployment
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
             callback(null, true);
         } else {
-            console.log('Blocked by CORS:', origin);
-            callback(null, true); // Allow all origins for now, can be restricted later
+            console.log('⚠️ CORS Warning: Origin not explicitly allowed but proceeding:', origin);
+            callback(null, true); // Allow anyway to prevent production breakage
         }
     },
     credentials: true
