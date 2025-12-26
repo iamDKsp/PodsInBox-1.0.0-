@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Pods in Box - E-commerce de Pods
 
 Loja online de pods/vapes com painel administrativo completo.
@@ -123,3 +124,6 @@ Após o deploy, acesse o painel admin e faça re-upload das imagens dos produtos
 ## 📝 Variáveis de Ambiente
 
 Veja `.env.example` para a lista completa de variáveis necessárias.
+=======
+# PodsInBox-1.0.0-
+>>>>>>> dfddcbf4ef1367dfa4d020d98e144aabf37e71b8
