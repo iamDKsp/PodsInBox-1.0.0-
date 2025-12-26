@@ -15,32 +15,12 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Allowed origins for CORS
-const allowedOrigins = [
-    'http://localhost:8080',
-    'http://localhost:8081',
-    'http://localhost:8082',
-    'http://localhost:5173',
-    'http://localhost:3000',
-    process.env.FRONTEND_URL,
-    'https://pods-in-box.vercel.app'
-].filter(Boolean);
-
 // Middleware
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-
-        // Check if origin is allowed OR if it's any vercel deployment
-        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
-            callback(null, true);
-        } else {
-            console.log('⚠️ CORS Warning: Origin not explicitly allowed but proceeding:', origin);
-            callback(null, true); // Allow anyway to prevent production breakage
-        }
-    },
-    credentials: true
+    origin: true, // Permite qualquer origem (temporário para debug)
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
