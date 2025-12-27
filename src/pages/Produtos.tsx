@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Search, SlidersHorizontal, X, Loader2, ArrowUpDown, ArrowUp, ArrowDown, ChevronDown, ChevronUp } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -40,7 +40,8 @@ const Produtos = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [searchTerm, selectedCategory, priceSort, fetchProducts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, selectedCategory, priceSort]);
 
   // Handle URL product parameter
   useEffect(() => {
@@ -61,7 +62,7 @@ const Produtos = () => {
     }
   }, [searchParams, isLoading, products]);
 
-  const fetchProducts = useCallback(async () => {
+  const fetchProducts = async () => {
     try {
       setIsLoading(true);
       const params: { search?: string; category?: string } = {};
@@ -98,7 +99,7 @@ const Produtos = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [searchTerm, selectedCategory, priceSort]);
+  };
 
   return (
     <div className="min-h-screen bg-background">
