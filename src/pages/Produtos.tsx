@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Search, SlidersHorizontal, X, Loader2, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Search, SlidersHorizontal, X, Loader2, ArrowUpDown, ArrowUp, ArrowDown, ChevronDown, ChevronUp } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -33,6 +33,7 @@ const Produtos = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [priceSort, setPriceSort] = useState<PriceSortType>("default");
   const [showFilters, setShowFilters] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
   const [highlightedProduct, setHighlightedProduct] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const productRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -117,84 +118,105 @@ const Produtos = () => {
           </div>
 
           {/* Search and Filters */}
-          <div className="flex flex-col lg:flex-row gap-4 mb-8">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Buscar por nome ou sabor..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 bg-muted/50 border-border/50 focus:border-primary"
-              />
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-            </div>
+          <div className="flex flex-col gap-4 mb-8">
+            {/* Search Bar and Price Sort */}
+            <div className="flex flex-col lg:flex-row gap-4">
+              {/* Search */}
+              <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Buscar por nome ou sabor..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-12 h-12 bg-muted/50 border-border/50 focus:border-primary"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
 
-            {/* Mobile Filter Toggle */}
-            <Button
-              variant="outline"
-              className="lg:hidden"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              <SlidersHorizontal className="w-5 h-5 mr-2" />
-              Filtros
-            </Button>
-
-            {/* Desktop Categories */}
-            <div className="hidden lg:flex items-center gap-2">
-              {categories.map((category) => (
+              {/* Desktop Price Sort */}
+              <div className="hidden lg:flex items-center gap-2">
                 <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "glass"}
+                  variant={priceSort === "default" ? "default" : "glass"}
                   size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className="transition-all"
+                  onClick={() => setPriceSort("default")}
+                  className="transition-all whitespace-nowrap"
+                  title="Ordenação padrão"
                 >
-                  {category}
+                  <ArrowUpDown className="w-4 h-4 mr-1" />
+                  Padrão
                 </Button>
-              ))}
+                <Button
+                  variant={priceSort === "highest" ? "default" : "glass"}
+                  size="sm"
+                  onClick={() => setPriceSort("highest")}
+                  className="transition-all whitespace-nowrap"
+                  title="Do maior para o menor preço"
+                >
+                  <ArrowDown className="w-4 h-4 mr-1" />
+                  Maior
+                </Button>
+                <Button
+                  variant={priceSort === "lowest" ? "default" : "glass"}
+                  size="sm"
+                  onClick={() => setPriceSort("lowest")}
+                  className="transition-all whitespace-nowrap"
+                  title="Do menor para o maior preço"
+                >
+                  <ArrowUp className="w-4 h-4 mr-1" />
+                  Menor
+                </Button>
+              </div>
+
+              {/* Mobile Filter Toggle */}
+              <Button
+                variant="outline"
+                className="lg:hidden"
+                onClick={() => setShowFilters(!showFilters)}
+              >
+                <SlidersHorizontal className="w-5 h-5 mr-2" />
+                Filtros
+              </Button>
             </div>
 
-            {/* Desktop Price Sort */}
-            <div className="hidden lg:flex items-center gap-2 border-l border-border/50 pl-4">
+            {/* Desktop Category Filters - Collapsible */}
+            <div className="hidden lg:block">
               <Button
-                variant={priceSort === "default" ? "default" : "glass"}
+                variant="ghost"
                 size="sm"
-                onClick={() => setPriceSort("default")}
-                className="transition-all"
-                title="Ordenação padrão"
+                onClick={() => setShowCategories(!showCategories)}
+                className="mb-2 text-muted-foreground hover:text-foreground"
               >
-                <ArrowUpDown className="w-4 h-4 mr-1" />
-                Padrão
+                {showCategories ? (
+                  <ChevronUp className="w-4 h-4 mr-2" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 mr-2" />
+                )}
+                {showCategories ? "Ocultar" : "Mostrar"} Categorias ({categories.length})
               </Button>
-              <Button
-                variant={priceSort === "highest" ? "default" : "glass"}
-                size="sm"
-                onClick={() => setPriceSort("highest")}
-                className="transition-all"
-                title="Maior valor"
-              >
-                <ArrowDown className="w-4 h-4 mr-1" />
-                Maior
-              </Button>
-              <Button
-                variant={priceSort === "lowest" ? "default" : "glass"}
-                size="sm"
-                onClick={() => setPriceSort("lowest")}
-                className="transition-all"
-                title="Menor valor"
-              >
-                <ArrowUp className="w-4 h-4 mr-1" />
-                Menor
-              </Button>
+
+              {showCategories && (
+                <div className="flex flex-wrap gap-2 animate-slide-up">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? "default" : "glass"}
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className="transition-all"
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
