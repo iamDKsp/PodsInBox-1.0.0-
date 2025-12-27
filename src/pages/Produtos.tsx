@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Search, SlidersHorizontal, X, Loader2 } from "lucide-react";
+import { Search, SlidersHorizontal, X, Loader2, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -23,12 +23,15 @@ interface Product {
   flavors?: string[];
 }
 
+type PriceSortType = "default" | "highest" | "lowest";
+
 const Produtos = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [priceSort, setPriceSort] = useState<PriceSortType>("default");
   const [showFilters, setShowFilters] = useState(false);
   const [highlightedProduct, setHighlightedProduct] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
@@ -36,7 +39,7 @@ const Produtos = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, priceSort]);
 
   // Handle URL product parameter
   useEffect(() => {
@@ -65,7 +68,29 @@ const Produtos = () => {
       if (selectedCategory !== "Todos") params.category = selectedCategory;
 
       const data = await productsApi.getAll(params);
-      setProducts(data.products);
+
+      // Apply price sorting while keeping featured products on top
+      let sortedProducts = [...data.products];
+
+      if (priceSort !== "default") {
+        // Separate featured and non-featured products
+        const featured = sortedProducts.filter(p => p.isFeatured);
+        const nonFeatured = sortedProducts.filter(p => !p.isFeatured);
+
+        // Sort non-featured products by price
+        nonFeatured.sort((a, b) => {
+          if (priceSort === "highest") {
+            return b.price - a.price; // Highest first
+          } else {
+            return a.price - b.price; // Lowest first
+          }
+        });
+
+        // Combine: featured first, then sorted non-featured
+        sortedProducts = [...featured, ...nonFeatured];
+      }
+
+      setProducts(sortedProducts);
       setCategories(["Todos", ...data.categories]);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -137,21 +162,95 @@ const Produtos = () => {
                 </Button>
               ))}
             </div>
+
+            {/* Desktop Price Sort */}
+            <div className="hidden lg:flex items-center gap-2 border-l border-border/50 pl-4">
+              <Button
+                variant={priceSort === "default" ? "default" : "glass"}
+                size="sm"
+                onClick={() => setPriceSort("default")}
+                className="transition-all"
+                title="Ordenação padrão"
+              >
+                <ArrowUpDown className="w-4 h-4 mr-1" />
+                Padrão
+              </Button>
+              <Button
+                variant={priceSort === "highest" ? "default" : "glass"}
+                size="sm"
+                onClick={() => setPriceSort("highest")}
+                className="transition-all"
+                title="Maior valor"
+              >
+                <ArrowDown className="w-4 h-4 mr-1" />
+                Maior
+              </Button>
+              <Button
+                variant={priceSort === "lowest" ? "default" : "glass"}
+                size="sm"
+                onClick={() => setPriceSort("lowest")}
+                className="transition-all"
+                title="Menor valor"
+              >
+                <ArrowUp className="w-4 h-4 mr-1" />
+                Menor
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Filters */}
           {showFilters && (
-            <div className="lg:hidden flex flex-wrap gap-2 mb-8 animate-slide-up">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "glass"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </Button>
-              ))}
+            <div className="lg:hidden flex flex-col gap-4 mb-8 animate-slide-up">
+              {/* Category Filters */}
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-2">Categorias</p>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? "default" : "glass"}
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Price Sort Filters */}
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-2">Ordenar por Preço</p>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant={priceSort === "default" ? "default" : "glass"}
+                    size="sm"
+                    onClick={() => setPriceSort("default")}
+                    title="Ordenação padrão"
+                  >
+                    <ArrowUpDown className="w-4 h-4 mr-1" />
+                    Padrão
+                  </Button>
+                  <Button
+                    variant={priceSort === "highest" ? "default" : "glass"}
+                    size="sm"
+                    onClick={() => setPriceSort("highest")}
+                    title="Maior valor"
+                  >
+                    <ArrowDown className="w-4 h-4 mr-1" />
+                    Maior Valor
+                  </Button>
+                  <Button
+                    variant={priceSort === "lowest" ? "default" : "glass"}
+                    size="sm"
+                    onClick={() => setPriceSort("lowest")}
+                    title="Menor valor"
+                  >
+                    <ArrowUp className="w-4 h-4 mr-1" />
+                    Menor Valor
+                  </Button>
+                </div>
+              </div>
             </div>
           )}
 
@@ -196,6 +295,7 @@ const Produtos = () => {
                 onClick={() => {
                   setSearchTerm("");
                   setSelectedCategory("Todos");
+                  setPriceSort("default");
                 }}
               >
                 Limpar Filtros
